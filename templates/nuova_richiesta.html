@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crea Nuovo Intervento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        form label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        form input, form select, form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Crea Nuovo Intervento</h1>
+        <form method="post" action="{{ url_for('nuova_richiesta') }}">
+            <label for="macchina">Macchina</label>
+            <input type="text" id="macchina" name="macchina" placeholder="Inserisci il nome della macchina" required>
+
+            <label for="priorità">Priorità</label>
+            <select id="priorità" name="priorità" required>
+                <option value="" disabled selected>Seleziona la priorità</option>
+                <option value="Alta">Alta</option>
+                <option value="Media">Media</option>
+                <option value="Bassa">Bassa</option>
+            </select>
+
+            <label for="tipo_intervento">Tipo di Intervento</label>
+            <select id="tipo_intervento" name="tipo_intervento" required>
+                <option value="" disabled selected>Seleziona il tipo di intervento</option>
+                <option value="Meccanico">Meccanico</option>
+                <option value="Elettrico">Elettrico</option>
+            </select>
+
+            <label for="descrizione">Descrizione</label>
+            <textarea id="descrizione" name="descrizione" placeholder="Inserisci una descrizione dettagliata" required></textarea>
+
+            <label for="nome_manutentore">Nome Manutentore (Opzionale)</label>
+            <input type="text" id="nome_manutentore" name="nome_manutentore" placeholder="Inserisci il nome del manutentore (se disponibile)">
+
+            <button type="submit">Crea Intervento</button>
+        </form>
+        <a href="{{ url_for('index') }}" class="back-link">Torna alla Home</a>
+    </div>
+</body>
+</html>
+

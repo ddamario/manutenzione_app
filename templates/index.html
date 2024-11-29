@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Manutenzioni - Base</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #0056b3;
+        }
+
+        .btn {
+            display: inline-block;
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn-secondary {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e0a800;
+        }
+
+        .interventi-list {
+            margin-top: 20px;
+        }
+
+        .intervento-card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: white;
+        }
+
+        .no-interventi {
+            text-align: center;
+            color: #888;
+        }
+    </style>
+    <!-- Aggiunta Firebase App e Messaging -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-messaging.js"></script>
+    <script>
+        // Configurazione Firebase
+        const firebaseConfig = {
+            apiKey: REDACTED" ", // Cambia questo con la tua API key
+            authDomain: "gestionemanutenzioni-6afbf.firebaseapp.com", // Cambia con il dominio Firebase
+            projectId: "gestionemanutenzioni-6afbf", // Cambia con l'ID del tuo progetto
+            storageBucket: "gestionemanutenzioni-6afbf.firebasestorage.app", // Cambia con il bucket di storage
+            messagingSenderId: "510221219492", // Cambia con l'ID del sender
+            appId: "1:510221219492:web:88d89bb829689142f15831" // Cambia con il tuo App ID
+        };
+
+        // Inizializza Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const messaging = firebase.messaging();
+
+        // Richiedi permesso per inviare notifiche
+        messaging.requestPermission()
+    .then(() => messaging.getToken({ vapidKey: "BAz_RNQ7WvO1KfjlRoh3eNiqR986BowYIFgZ7IAEYMTa5rFDMvfRNeyb5lfPBt0DahT30jRgRMwLIKpcEuFeR6Y" })) // Sostituisci con la tua chiave VAPID
+    .then((currentToken) => {
+        if (currentToken) {
+            console.log("Token generato: ", currentToken);
+
+            // Invia il token al server Flask
+            fetch("/salva_token", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ token: currentToken })
+            })
+            .then((response) => {
+                if (response.ok) {
+                    console.log("Token salvato con successo sul server");
+                } else {
+                    console.error("Errore durante il salvataggio del token sul server");
+                }
+            })
+            .catch((error) => {
+                console.error("Errore durante l'invio del token al server: ", error);
+            });
+
+        } else {
+            console.log("Nessun token trovato.");
+        }
+    })
+    .catch((err) => {
+        console.error("Errore durante la richiesta di permesso per notifiche: ", err);
+    });
+        // Ricevi notifiche push
+        messaging.onMessage((payload) => {
+            console.log("Messaggio ricevuto: ", payload);
+            alert(`Notifica ricevuta: ${payload.notification.title}\n${payload.notification.body}`);
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Gestione Manutenzioni Straordinarie </h1>
+        <a href="{{ url_for('nuova_richiesta') }}" class="btn">Crea Nuovo Intervento</a>
+        <a href="{{ url_for('interventi_completati') }}" style="text-decoration: none; background-color: #007bff; color: white; padding: 10px 20px; border-radius: 5px; margin-left: 30px;">
+            Visualizza Interventi Completati
+        </a>
+        
+        {% if interventi %}
+            <div class="interventi-list">
+                {% for intervento in interventi %}
+                    <div class="intervento-card">
+                        <p><strong>Macchina:</strong> {{ intervento.macchina }}</p>
+                        <p><strong>Stato:</strong> {{ intervento.stato }}</p>
+                        <p><strong>Priorità:</strong> {{ intervento.priorità }}</p>
+                        <p><strong>Nome Manutentore:</strong> {{ intervento.nome_manutentore or "Non assegnato" }}</p>
+                        <p><strong>Data Creazione:</strong> {{ intervento.data_creazione.strftime('%d/%m/%Y %H:%M') }}</p>
+                        <p><strong>Descrizione Intervento:</strong>{{ intervento.descrizione }}</p>
+                        {% if intervento.stato != "Completato" %}
+                            <a href="{{ url_for('compila_rapporto', intervento_id=intervento.id) }}" class="btn btn-secondary">Compila Rapporto</a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="no-interventi">Nessun intervento trovato.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+
+

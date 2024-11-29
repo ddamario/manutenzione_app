@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+    <title>Aggiorna Stato Intervento</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 40px;
+            max-width: 600px;
+        }
+        .card {
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header-text {
+            color: #343a40;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .btn-submit {
+            background-color: #17a2b8;
+            color: white;
+        }
+        .btn-submit:hover {
+            background-color: #138496;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="header-text"><i class="fas fa-sync-alt"></i> Aggiorna Stato Intervento</h2>
+
+    <div class="card">
+        <form method="post">
+            <div class="form-group">
+                <label for="stato">Stato dell'Intervento</label>
+                <select name="stato" id="stato" class="form-control" required>
+                    <option value="In attesa" {% if intervento.stato == "In attesa" %}selected{% endif %}>In attesa</option>
+                    <option value="In corso" {% if intervento.stato == "In corso" %}selected{% endif %}>In corso</option>
+                    <option value="Completato" {% if intervento.stato == "Completato" %}selected{% endif %}>Completato</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="manutentore_id">Manutentore Assegnato</label>
+                <select name="manutentore_id" id="manutentore_id" class="form-control" required>
+                    {% for manutentore in manutentori %}
+                        <option value="{{ manutentore.id }}" {% if manutentore.id == intervento.manutentore_id %}selected{% endif %}>
+                            {{ manutentore.nome }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-submit btn-block"><i class="fas fa-save"></i> Aggiorna Intervento</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

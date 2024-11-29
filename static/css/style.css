@@ -1,0 +1,80 @@
+/* style.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #0056b3;
+    margin-bottom: 30px;
+}
+
+.interventi-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.intervento-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.intervento-card h2 {
+    color: #007bff;
+    font-size: 1.4em;
+    margin-bottom: 10px;
+}
+
+.intervento-card p {
+    font-size: 1em;
+    margin: 5px 0;
+    color: #555;
+}
+
+.no-interventi {
+    text-align: center;
+    font-size: 1.2em;
+    color: #666;
+}
+
+.actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-action {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9em;
+    transition: background-color 0.3s;
+}
+
+.btn-action:hover {
+    background-color: #0056b3;
+}
+input[type="text"],
+textarea,
+button {
+    font-family: Arial, sans-serif; /* O il carattere desiderato */
+    font-size: 16px;
+    color: #333;
+}
+

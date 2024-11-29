@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compila Rapporto di Intervento</title>
+    <style>
+        /* Stili Generali */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9fafb;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e0e0e0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8em;
+            color: #1a73e8;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            color: #333;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 18px;
+            font-size: 1em;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-submit {
+            background-color: #4CAF50;
+            border: none;
+        }
+
+        .btn-submit:hover {
+            background-color: #45a049;
+        }
+
+        .btn-back {
+            background-color: #f44336;
+            text-align: center;
+        }
+
+        .btn-back:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Compila Rapporto di Intervento</h1>
+
+            <!-- Form per compilare il rapporto -->
+            <form action="{{ url_for('compila_rapporto', intervento_id=intervento.id) }}" method="POST">
+                <div class="form-group">
+                    <label for="azienda">Azienda:</label>
+                    <input type="text" id="azienda" name="azienda">
+                </div>
+
+                <div class="form-group">
+                    <label for="macchina">Macchina:</label>
+                    <input type="text" id="macchina" name="macchina" value="{{ intervento.macchina }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="codice_interno">Codice Interno:</label>
+                    <input type="text" id="codice_interno" name="codice_interno" required>
+                </div>
+                
+
+                <div class="form-group">
+                    <label for="nome_manutentore">Nome del Manutentore:</label>
+                    <input type="text" id="nome_manutentore" name="nome_manutentore" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="problema_segnalato">Problema Segnalato:</label>
+                    <textarea id="problema_segnalato" name="problema_segnalato" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="causa_del_problema">Causa del Problema:</label>
+                    <textarea id="causa_del_problema" name="causa_del_problema" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="descrizione">Descrizione dell'Intervento:</label>
+                    <textarea id="descrizione" name="descrizione" rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="tempo_intervento">Tempo di Intervento:</label>
+                    <input type="text" id="tempo_intervento" name="tempo_intervento" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="materiali_utilizzati">Materiali Utilizzati:</label>
+                    <textarea id="materiali_utilizzati" name="materiali_utilizzati" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="costo_ricambi">Costo Ricambi:</label>
+                    <input type="text" id="costo_ricambi" name="costo_ricambi">
+                </div>
+
+                
+
+                <div class="form-group">
+                    <label for="ripristino_condizioni_di_pulizia">Ripristino Condizioni di Pulizia:</label>
+                    <textarea id="ripristino_condizioni_di_pulizia" name="ripristino_condizioni_di_pulizia" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="risoluzione_problema">Risoluzione Problema:</label>
+                    <textarea id="risoluzione_problema" name="risoluzione_problema" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="note">Note Aggiuntive:</label>
+                    <textarea id="note" name="note" rows="3"></textarea>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-submit">Salva Rapporto</button>
+                    <a href="{{ url_for('index') }}" class="btn btn-back">Torna alla Home</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
